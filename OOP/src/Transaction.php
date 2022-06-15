@@ -2,13 +2,17 @@
 declare(strict_types=1);
 class Transaction
 {
-    public float $amount;
-    public string $description;
-
-    public function __construct(float $amount, string $description)
+    private ?Customer $customer = null;
+    public function __construct(private float $amount, private string $description)
     {
-        $this->amount = $amount;
-        $this->description = $description;   
+        // php behind the scenes does the property definition and assignment
+        // you can't use callable with visibility modifiers (public, private, protected)
+        // you can't have duplicate property names
+        echo $amount;
+    }
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
     }
 
     public function addTax(float $rate): Transaction
