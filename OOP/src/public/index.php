@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-require_once '../Transaction.php';
+// require_once '../Transaction.php';
 
 // Classes & Objects
 // $transaction = new Transaction(100, 'Payment for something');
@@ -49,14 +49,27 @@ require_once '../Transaction.php';
 // $obj = (object) null; // this means $obj->value = null
 // var_dump($obj);
 // echo '<br>';
-////////////////////////////////////
-require_once '../PaymentProfile.php';
-require_once '../Customer.php';
-require_once '../Transaction.php';
+// ////////////////////////////////////
+// require_once '../PaymentProfile.php';
+// require_once '../Customer.php';
+// require_once '../Transaction.php';
 
-$transaction = new Transaction(100, 'Payment for something');
-// $transaction->customer = new Customer();
-// echo $transaction?->customer->paymentProfile->id ?? 'foo'; // null save to use ?->
-echo $transaction->getCustomer()?->getPaymentProfile()?->id ?? 'foo'; // null save to use ?->
+// $transaction = new Transaction(100, 'Payment for something');
+// // $transaction->customer = new Customer();
+// // echo $transaction?->customer->paymentProfile->id ?? 'foo'; // null save to use ?->
+// echo $transaction->getCustomer()?->getPaymentProfile()?->id ?? 'foo'; // null save to use ?->
 // null save operator is readonly you can't change the value of the property
-
+// echo $transaction->getCustomer()?->setPaymentProfile(createProfile())?->id ?? 'foo'; // this createProfile funcition will not be executed if the customer is null
+//////////////////// Name Spacing////////////////
+require_once '../app/PaymentGateway/Stripe/Transaction.php';
+require_once '../app/PaymentGateway/Paddle/CustomerProfile.php';
+require_once '../app/PaymentGateway/Paddle/DateTime.php';
+require_once '../app/PaymentGateway/Paddle/Transaction.php';
+require_once '../app/Notification/Email.php';
+use App\PaymentGateway\Paddle\{Transaction, CustomerProfile, DateTime};
+use App\PaymentGateway\Stripe\Transaction as StripeTransaction;
+// var_dump(new PaymentGateway\Paddle\Transaction());
+$paddleTransaction = new Transaction();
+$stripeTransaction = new StripeTransaction();
+$paddleCustomerProfile = new CustomerProfile();
+var_dump($paddleTransaction, $stripeTransaction);
