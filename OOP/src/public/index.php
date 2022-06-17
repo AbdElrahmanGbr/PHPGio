@@ -61,15 +61,33 @@ declare(strict_types=1);
 // null save operator is readonly you can't change the value of the property
 // echo $transaction->getCustomer()?->setPaymentProfile(createProfile())?->id ?? 'foo'; // this createProfile funcition will not be executed if the customer is null
 //////////////////// Name Spacing////////////////
-require_once '../app/PaymentGateway/Stripe/Transaction.php';
-require_once '../app/PaymentGateway/Paddle/CustomerProfile.php';
-require_once '../app/PaymentGateway/Paddle/DateTime.php';
-require_once '../app/PaymentGateway/Paddle/Transaction.php';
-require_once '../app/Notification/Email.php';
+// require_once '../app/PaymentGateway/Stripe/Transaction.php';
+// require_once '../app/PaymentGateway/Paddle/CustomerProfile.php';
+// require_once '../app/PaymentGateway/Paddle/DateTime.php';
+// require_once '../app/PaymentGateway/Paddle/Transaction.php';
+// require_once '../app/Notification/Email.php';
+
+////////////////////// Auto Loading //////////////////
+spl_autoload_register(function ($class) {
+    $path = __DIR__ . '/../' . lcfirst(str_replace('\\', '/', $class) . '.php');
+    if(file_exists($path)) {
+        require_once $path;
+    }
+    // var_dump('autoloading ' . $path);
+});
+
+// spl_autoload_register(function ($class) {
+//     var_dump('autoloading 2 ' . $class);
+// }, prepend:true); // prepend will load the function before the others
+
+
 use App\PaymentGateway\Paddle\{Transaction, CustomerProfile, DateTime};
-use App\PaymentGateway\Stripe\Transaction as StripeTransaction;
+// use App\PaymentGateway\Stripe\Transaction as StripeTransaction;
 // var_dump(new PaymentGateway\Paddle\Transaction());
 $paddleTransaction = new Transaction();
-$stripeTransaction = new StripeTransaction();
-$paddleCustomerProfile = new CustomerProfile();
-var_dump($paddleTransaction, $stripeTransaction);
+// $stripeTransaction = new StripeTransaction();
+// $paddleCustomerProfile = new CustomerProfile();
+// var_dump($paddleTransaction, $stripeTransaction);
+var_dump($paddleTransaction);
+//docker
+phpinfo();
